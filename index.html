@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Table V03</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <!--===============================================================================================-->
+    <link rel="icon" type="image/png" href="images/icons/favicon.ico" />
+    <!--===============================================================================================-->
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="vendor/bootstrap/css/bootstrap.min.css"
+    />
+    <!--===============================================================================================-->
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="fonts/font-awesome-4.7.0/css/font-awesome.min.css"
+    />
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="vendor/animate/animate.css" />
+    <!--===============================================================================================-->
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="vendor/select2/select2.min.css"
+    />
+    <!--===============================================================================================-->
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="vendor/perfect-scrollbar/perfect-scrollbar.css"
+    />
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="css/util.css" />
+    <link rel="stylesheet" type="text/css" href="css/main.css" />
+
+    <!--===============================================================================================-->
+  </head>
+  <body>
+    <div class="input-button">
+      <br />
+      <div class="fileUpload blue-btn btn width100">
+        <span>Upload your .json file</span>
+        <input type="file" class="uploadlogo" onchange="readFile(this)" />
+      </div>
+      <div class="export"></div>
+      <div id="upload" class="fileUpload blue-btn btn width100">
+        <span>Export file as .json</span>
+        <button onclick="downloadClick()">download</button>
+      </div>
+      <div id="add" class="fileUpload blue-btn btn width100">
+        <span>Add new student</span>
+      </div>
+    </div>
+    <div class="limiter">
+      <div class="container-table100">
+        <div class="wrap-table100">
+          <div class="table100 ver6 m-b-110">
+            <table id="student-rankings" data-vertable="ver6">
+              <thead>
+                <tr class="row100 head">
+                  <th class="column100 column1" data-column="column1">
+                    Name/Surname
+                  </th>
+                  <th class="column100 column2" data-column="column2">
+                    Algebra
+                  </th>
+                  <th class="column100 column3" data-column="column3">
+                    Biology
+                  </th>
+                  <th class="column100 column4" data-column="column4">
+                    Science
+                  </th>
+                  <th class="column100 column5" data-column="column5">
+                    Language
+                  </th>
+                  <th class="column100 column6" data-column="column6">
+                    Chemistry
+                  </th>
+                  <th class="column100 column7" data-column="column7">PE</th>
+                  <th class="column100 column8" data-column="column8">Avg</th>
+                  <th class="column100 column9" data-column="column9">
+                    Action
+                  </th>
+                </tr>
+              </thead>
+              <tbody></tbody>
+            </table>
+          </div>
+        </div>
+	  </div>
+	  <div class="container">  
+		<form id="contact" action="">
+		  <h3>Student Info</h3>
+		  <h4>Enter student's information</h4>
+		  <fieldset>
+			<input id="name" placeholder="Student's name" type="text" tabindex="1" required autofocus>
+		  </fieldset>
+		  <fieldset>
+			<input id="surname" placeholder="Student's surname" type="text" tabindex="2" required>
+		  </fieldset>
+		  <fieldset>
+			<fieldset>
+				Algebra
+				<select name="marks" id="alg">
+				  <option value="1">1</option>
+				  <option value="2">2</option>
+				  <option value="3">3</option>
+				  <option value="4">4</option>
+				  <option value="5">5</option>
+				</select>
+				Biology
+				<select name="marks" id="bio">
+				  <option value="1">1</option>
+				  <option value="2">2</option>
+				  <option value="3">3</option>
+				  <option value="4">4</option>
+				  <option value="5">5</option>
+				</select>
+				Science
+				<select name="marks" id="sci">
+				  <option value="1">1</option>
+				  <option value="2">2</option>
+				  <option value="3">3</option>
+				  <option value="4">4</option>
+				  <option value="5">5</option>
+				</select>
+				Language
+				<select name="marks" id="lang">
+				  <option value="1">1</option>
+				  <option value="2">2</option>
+				  <option value="3">3</option>
+				  <option value="4">4</option>
+				  <option value="5">5</option>
+				</select>
+				Chemistry
+				<select name="marks" id="chem">
+				  <option value="1">1</option>
+				  <option value="2">2</option>
+				  <option value="3">3</option>
+				  <option value="4">4</option>
+				  <option value="5">5</option>
+				</select>
+				PE
+				<select name="marks" id="pe">
+				  <option value="1">1</option>
+				  <option value="2">2</option>
+				  <option value="3">3</option>
+				  <option value="4">4</option>
+				  <option value="5">5</option>
+				</select>
+			  </fieldset>
+		  <fieldset>
+		</fieldset>
+		<button onclick="submitForm()"  id="contact-submit" >Submit</button>
+		</form>
+	  </div>
+      <div class="buttons-container">
+        <form action="">
+          <fieldset>
+            <input type="text" placeholder="Your name" id="name" required />
+          </fieldset>
+          <fieldset>
+            <input
+              type="text"
+              placeholder="Your surname"
+              id="surname"
+              required
+            />
+          </fieldset>
+          <fieldset>
+            Algebra
+            <select name="marks" id="alg">
+              <option value="1">1</option>
+              <option value="2">2</option>
+              <option value="3">3</option>
+              <option value="4">4</option>
+              <option value="5">5</option>
+            </select>
+            Biology
+            <select name="marks" id="bio">
+              <option value="1">1</option>
+              <option value="2">2</option>
+              <option value="3">3</option>
+              <option value="4">4</option>
+              <option value="5">5</option>
+            </select>
+            Science
+            <select name="marks" id="sci">
+              <option value="1">1</option>
+              <option value="2">2</option>
+              <option value="3">3</option>
+              <option value="4">4</option>
+              <option value="5">5</option>
+            </select>
+            Language
+            <select name="marks" id="lang">
+              <option value="1">1</option>
+              <option value="2">2</option>
+              <option value="3">3</option>
+              <option value="4">4</option>
+              <option value="5">5</option>
+            </select>
+            Chemistry
+            <select name="marks" id="chem">
+              <option value="1">1</option>
+              <option value="2">2</option>
+              <option value="3">3</option>
+              <option value="4">4</option>
+              <option value="5">5</option>
+            </select>
+            PE
+            <select name="marks" id="pe">
+              <option value="1">1</option>
+              <option value="2">2</option>
+              <option value="3">3</option>
+              <option value="4">4</option>
+              <option value="5">5</option>
+            </select>
+          </fieldset>
+        </form>
+        <button class="submit-button" type="submit" onclick="submitForm()">
+          Submit
+        </button>
+      </div>
+    </div>
+
+    <!--===============================================================================================-->
+    <script src="vendor/jquery/jquery-3.2.1.min.js"></script>
+    <!--===============================================================================================-->
+    <script src="vendor/bootstrap/js/popper.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.min.js"></script>
+    <!--===============================================================================================-->
+    <script src="vendor/select2/select2.min.js"></script>
+    <script src="./jquery-tablesort-master/jquery.tablesort.js"></script>
+    <script
+      type="text/javascript"
+      src="./tablesorter-master/js/jquery.tablesorter.js"
+    ></script>
+    <!--===============================================================================================-->
+    <script src="js/main.js"></script>
+  </body>
+</html>
