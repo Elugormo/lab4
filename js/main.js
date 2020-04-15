@@ -106,7 +106,30 @@ function readFile(input) {
   };
 }
 
+function checkData() {
+  $("#nodata-container").remove();
+  if (!Array.isArray(listofArr) || !listofArr.length) {
+    let container = document.createElement("div");
+    container.style.textAlign = "center";
+    container.id = "nodata-container";
+    let headerText = document.createElement("h4");
+    let additionalText = document.createElement("p");
+    additionalText.style.color = "#2a3f47";
+    additionalText.textContent = "Upload a file or add a new student";
+    headerText.textContent = "No data";
+    headerText.style.fontSize = "35px";
+    headerText.style.fontFamily = "Montserrat-Medium";
+    const limiter = $(".container-table100");
+    container.append(headerText);
+    container.append(additionalText);
+    limiter.append(container);
+  }
+}
+
+document.addEventListener("DOMContentLoaded", checkData);
+
 function submitForm() {
+  $.modal.close();
   let newEntry = [];
   let nameInput = document.querySelector("#name");
   let surnameInput = document.querySelector("#surname");
@@ -116,7 +139,6 @@ function submitForm() {
   let lang = document.querySelector("#lang");
   let chemMark = document.querySelector("#chem");
   let peMark = document.querySelector("#pe");
-
   let marksAvg = 0;
   marksAvg =
     +bioMark.value +
@@ -168,7 +190,7 @@ function submitForm() {
   });
   rankingsBody.appendChild(tr);
   arrayToJSONObject(listofArr);
-
+  checkData();
   setHandlers();
 }
 
@@ -222,4 +244,12 @@ $(".submit-button").click(() => {
     { scrollTop: $("#student-rankings").offset().top },
     "slow"
   );
+});
+
+$(".OpenModal").click(function (event) {
+  $(this).modal({
+    fadeDuration: 250,
+    fadeDelay: 0.8,
+  });
+  return false;
 });

@@ -34,7 +34,9 @@
     />
     <!--===============================================================================================-->
     <link rel="stylesheet" type="text/css" href="css/util.css" />
-    <link rel="stylesheet" type="text/css" href="css/main.css" />
+	<link rel="stylesheet" type="text/css" href="css/main.css" />
+	
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.css" />
 
     <!--===============================================================================================-->
   </head>
@@ -47,11 +49,10 @@
       </div>
       <div class="export"></div>
       <div id="upload" class="fileUpload blue-btn btn width100">
-        <span>Export file as .json</span>
-        <button onclick="downloadClick()">download</button>
+        <button onclick="downloadClick()">Export file as .json</button>
       </div>
       <div id="add" class="fileUpload blue-btn btn width100">
-        <span>Add new student</span>
+		<a class='OpenModal' href="#contact" rel="modal:open">Add new student</a>
       </div>
     </div>
     <div class="limiter">
@@ -92,7 +93,7 @@
         </div>
 	  </div>
 	  <div class="container">  
-		<form id="contact" action="">
+		<form id="contact" class="modal" action="">
 		  <h3>Student Info</h3>
 		  <h4>Enter student's information</h4>
 		  <fieldset>
@@ -157,76 +158,10 @@
 		<button onclick="submitForm()"  id="contact-submit" >Submit</button>
 		</form>
 	  </div>
-      <div class="buttons-container">
-        <form action="">
-          <fieldset>
-            <input type="text" placeholder="Your name" id="name" required />
-          </fieldset>
-          <fieldset>
-            <input
-              type="text"
-              placeholder="Your surname"
-              id="surname"
-              required
-            />
-          </fieldset>
-          <fieldset>
-            Algebra
-            <select name="marks" id="alg">
-              <option value="1">1</option>
-              <option value="2">2</option>
-              <option value="3">3</option>
-              <option value="4">4</option>
-              <option value="5">5</option>
-            </select>
-            Biology
-            <select name="marks" id="bio">
-              <option value="1">1</option>
-              <option value="2">2</option>
-              <option value="3">3</option>
-              <option value="4">4</option>
-              <option value="5">5</option>
-            </select>
-            Science
-            <select name="marks" id="sci">
-              <option value="1">1</option>
-              <option value="2">2</option>
-              <option value="3">3</option>
-              <option value="4">4</option>
-              <option value="5">5</option>
-            </select>
-            Language
-            <select name="marks" id="lang">
-              <option value="1">1</option>
-              <option value="2">2</option>
-              <option value="3">3</option>
-              <option value="4">4</option>
-              <option value="5">5</option>
-            </select>
-            Chemistry
-            <select name="marks" id="chem">
-              <option value="1">1</option>
-              <option value="2">2</option>
-              <option value="3">3</option>
-              <option value="4">4</option>
-              <option value="5">5</option>
-            </select>
-            PE
-            <select name="marks" id="pe">
-              <option value="1">1</option>
-              <option value="2">2</option>
-              <option value="3">3</option>
-              <option value="4">4</option>
-              <option value="5">5</option>
-            </select>
-          </fieldset>
-        </form>
-        <button class="submit-button" type="submit" onclick="submitForm()">
-          Submit
-        </button>
-      </div>
-    </div>
-
+	 
+      
+	  
+	
     <!--===============================================================================================-->
     <script src="vendor/jquery/jquery-3.2.1.min.js"></script>
     <!--===============================================================================================-->
@@ -238,7 +173,8 @@
     <script
       type="text/javascript"
       src="./tablesorter-master/js/jquery.tablesorter.js"
-    ></script>
+	></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js"></script>
     <!--===============================================================================================-->
     <script src="js/main.js"></script>
   </body>

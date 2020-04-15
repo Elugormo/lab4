@@ -18,5 +18,35 @@
     "bio": 5,
     "science": 5,
     "avg": 4.5
+  },
+  "student3": {
+    "name": "Billie Mitchell",
+    "alg": 5,
+    "chem": 4,
+    "pe": 2,
+    "lang": 5,
+    "bio": 5,
+    "science": 5,
+    "avg": 4
+  },
+  "student4": {
+    "name": "Alexis Sanches",
+    "alg": 3,
+    "chem": 4,
+    "pe": 3,
+    "lang": 3,
+    "bio": 4,
+    "science": 4,
+    "avg": 3.6
+  },
+  "student5": {
+    "name": "Monika Belucci",
+    "alg": 5,
+    "chem": 5,
+    "pe": 5,
+    "lang": 5,
+    "bio": 5,
+    "science": 5,
+    "avg": 5
   }
 }

@@ -617,9 +617,15 @@ input::-webkit-file-upload-button {
   width: 100%;
 }
 
-.upload > button {
+#upload > button {
   color: inherit;
-  text-decoration: underline;
+}
+
+#add > a {
+  color: #27a9e0;
+}
+#add > a:hover {
+  color: #fff;
 }
 
 .container {
@@ -694,6 +700,25 @@ fieldset {
   height: 100px;
   max-width: 100%;
   resize: none;
+}
+
+#contact-submit {
+  cursor: pointer;
+  width: 100%;
+  border: none;
+  background: #4caf50;
+  color: #fff;
+  margin: 0 0 5px;
+  padding: 10px;
+  font-size: 15px;
+  border: 1px #4caf50 solid;
+}
+
+#contact-submit:hover {
+  transition: 0.1s ease-in;
+  background: #fff;
+  color: #27a9e0;
+  border: 1px #27a9e0 solid;
 }
 
 #contact button[type="submit"] {
