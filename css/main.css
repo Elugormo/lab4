@@ -584,6 +584,10 @@ label {
   margin: 40px;
 }
 
+.input-button > * {
+  margin: 40px;
+}
+
 .blue-btn:hover {
   background: #27a9e0;
   color: white;

@@ -30,15 +30,17 @@
   <div class="input-button">
     <br />
     <div class="fileUpload blue-btn btn width100">
-      <span>Upload your .json file</span>
+		<span>Upload your .json file</span>
+		<i class="fa fa-upload" aria-hidden="true"></i>
       <input type="file" class="uploadlogo" accept=".json" onchange="readFile(this)" />
     </div>
-    <div class="export"></div>
     <div id="upload" class="fileUpload blue-btn btn width100">
-      <button onclick="downloadClick()">Export file as .json</button>
+	  <button onclick="downloadClick()">Export file as .json</button>
+	  <i class="fa fa-download" aria-hidden="true"></i>
     </div>
     <div id="add" class="fileUpload blue-btn btn width100">
-      <a class='OpenModal' href="#contact" rel="modal:open">Add new student</a>
+	  <a class='OpenModal' href="#contact" rel="modal:open">Add new student</a>
+	  <i class="fa fa-plus" aria-hidden="true"></i>
     </div>
   </div>
   <div class="limiter">
