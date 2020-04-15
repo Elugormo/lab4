@@ -1,5 +1,7 @@
 var $ = jQuery;
 let list = [];
+let listofArr = [];
+
 const objFieldsList = [
   "name",
   "alg",
@@ -10,6 +12,7 @@ const objFieldsList = [
   "science",
   "avg",
 ];
+
 const onMouseOver = function () {
   var table1 = $(this).parent().parent().parent();
   var table2 = $(this).parent().parent();
@@ -45,41 +48,60 @@ const setHandlers = function () {
 
 const rankingsBody = document.querySelector("#student-rankings > tbody");
 
-function populateRankings(json) {
-  json.forEach((row) => {
-    const tr = document.createElement("tr");
-    tr.className = "row100";
-    row.forEach((cell, key) => {
-      const td = document.createElement("td");
-      td.textContent = cell;
-      td.className = `column100 column${key}`;
-      td.dataset.column = `column${key}`;
-      tr.appendChild(td);
-    });
-    const tdSpec = document.createElement("td");
-    tdSpec.style.cursor = "pointer";
-    //tdSpec.id = "delete-button";
-    tdSpec.className = "column100 column9";
-    tdSpec.dataset.column = "column9";
-    tdSpec.style.paddingLeft = "10px";
-    const deletebutton = document.createElement("button");
-    deletebutton.className = "delete-button";
-    deletebutton.textContent = "delete";
-    deletebutton.style.height = "30px";
-    tdSpec.append(deletebutton);
-    tr.appendChild(tdSpec);
+const createGenericCell = (cell, key) => {
+  const td = document.createElement("td");
+  td.textContent = cell;
+  td.className = `column100 column${key}`;
+  td.dataset.column = `column${key}`;
+
+  return td;
+};
+
+const createDeleteRowCell = () => {
+  const td = document.createElement("td");
+  td.style.cursor = "pointer";
+  //tdSpec.id = "delete-button";
+  td.className = "column100 column9";
+  td.dataset.column = "column9";
+  td.style.paddingLeft = "10px";
+
+  const deleteButton = document.createElement("button");
+  deleteButton.className = "delete-button";
+  deleteButton.textContent = "delete";
+  deleteButton.style.height = "30px";
+
+  td.append(deleteButton);
+
+  return td;
+};
+
+const createRow = (rowData, rowId) => {
+  const tr = document.createElement("tr");
+  tr.className = "row100";
+  tr.dataset.rowId = rowId;
+
+  rowData.forEach((cell, key) => {
+    const td = createGenericCell(cell, key);
+    tr.appendChild(td);
+  });
+
+  const tdSpec = createDeleteRowCell();
+  tr.appendChild(tdSpec);
+
+  return tr;
+};
+
+function populateRankings(matrix) {
+  matrix.forEach((row) => {
+    const [rowId, ...rowData] = row;
+    const tr = createRow(rowData, rowId);
+
     const $tr = $(tr);
     $(rankingsBody).append($tr).trigger("addRows", [$tr, true]);
   });
 
-  $("#student-rankings").on("click", ".delete-button", function () {
-    $(this).closest("tr").remove();
-  });
-
   setHandlers();
 }
-
-let listofArr = [];
 
 function readFile(input) {
   let file = input.files[0];
@@ -88,17 +110,24 @@ function readFile(input) {
 
   reader.readAsText(file);
   reader.onload = function () {
-    $("#student-rankings >tbody").empty();
+    $(rankingsBody).empty();
     console.log(reader.result);
     let jsonParsed = JSON.parse(reader.result);
-    for (let prop in jsonParsed) {
-      list.push(jsonParsed[prop]);
-    }
-    listofArr = list.map(function (obj) {
-      return objFieldsList.map(function (key) {
-        return obj[key];
-      });
+
+    listofArr = Object.keys(jsonParsed).map((studentId) => {
+      const studentData = jsonParsed[studentId];
+      const columns = objFieldsList.map((columnId) => studentData[columnId]);
+      return [studentId, ...columns];
     });
+
+    // for (let prop in jsonParsed) {
+    //   list.push(jsonParsed[prop]);
+    // }
+    // listofArr = list.map(function (obj) {
+    //   return objFieldsList.map(function (key) {
+    //     return obj[key];
+    //   });
+    // });
     console.log(listofArr);
     populateRankings(listofArr);
 
@@ -128,89 +157,60 @@ function checkData() {
 
 document.addEventListener("DOMContentLoaded", checkData);
 
-function submitForm() {
+const getMarksArray = () => {
+  return [
+    +$("#bio").val(),
+    +$("#alg").val(),
+    +$("#sci").val(),
+    +$("#lang").val(),
+    +$("#chem").val(),
+    +$("#pe").val(),
+  ];
+};
+
+function submitForm(e) {
+  e.preventDefault();
   $.modal.close();
+
   let newEntry = [];
-  let nameInput = document.querySelector("#name");
-  let surnameInput = document.querySelector("#surname");
-  let bioMark = document.querySelector("#bio");
-  let algMark = document.querySelector("#alg");
-  let sciMark = document.querySelector("#sci");
-  let lang = document.querySelector("#lang");
-  let chemMark = document.querySelector("#chem");
-  let peMark = document.querySelector("#pe");
-  let marksAvg = 0;
-  marksAvg =
-    +bioMark.value +
-    +algMark.value +
-    +sciMark.value +
-    +lang.value +
-    +chemMark.value +
-    +peMark.value;
+  const marks = getMarksArray();
+  const marksSum = marks.reduce(function (a, b) {
+    return a + b;
+  }, 0);
+  const marksAvg = (marksSum / marks.length).toFixed(2);
+
+  const name = $("#name").val();
+  const surname = $("#surname").val();
+
   newEntry = [
-    `${nameInput.value} ${surnameInput.value}`,
-    +bioMark.value,
-    +algMark.value,
-    +sciMark.value,
-    +lang.value,
-    +chemMark.value,
-    +peMark.value,
-    +`${(marksAvg / 6).toFixed(2)}`,
+    `student${listofArr.length}`,
+    `${name} ${surname}`,
+    ...marks,
+    +marksAvg,
   ];
   listofArr.push(newEntry);
+
   console.log(newEntry);
   console.log(listofArr);
-  let i = 1;
-  const tr = document.createElement("tr");
-  tr.className = "row100";
-  newEntry.forEach((cell) => {
-    const td = document.createElement("td");
-    td.textContent = cell;
-    td.className = `column100 column${i}`;
-    td.dataset.column = `column${i}`;
-    tr.appendChild(td);
-    i++;
-    if (i == 9) {
-      const tdSpec = document.createElement("td");
-      tdSpec.style.cursor = "pointer";
-      //tdSpec.id = "delete-button";
-      tdSpec.className = "column100 column9";
-      tdSpec.dataset.column = "column9";
-      tdSpec.style.paddingLeft = "10px";
-      const deletebutton = document.createElement("button");
-      deletebutton.className = "delete-button";
-      deletebutton.textContent = "delete";
-      deletebutton.style.height = "30px";
-      $("#student-rankings").on("click", ".delete-button", function () {
-        $(this).closest("tr").remove();
-      });
-      tdSpec.append(deletebutton);
-      tr.appendChild(tdSpec);
-    }
-  });
+
+  const [rowId, ...rowData] = newEntry;
+  const tr = createRow(rowData, rowId);
+
   rankingsBody.appendChild(tr);
+
   arrayToJSONObject(listofArr);
   checkData();
   setHandlers();
 }
 
-$("#student-rankings").on("click", "#table-button", function () {
-  $(this).closest("tr").remove();
-});
-
-$(function () {
-  $("#student-rankings").tablesorter();
-  setHandlers();
-});
-
 function arrayToJSONObject(matrix) {
   const finalObj = {};
   //header
-  matrix.forEach((row, i) => {
-    const studentId = `student${i}`;
+  matrix.forEach((row) => {
+    const [studentId, ...rowData] = row;
     const student = {};
     objFieldsList.forEach((field, j) => {
-      student[field] = row[j];
+      student[field] = rowData[j];
     });
 
     finalObj[studentId] = student;
@@ -232,24 +232,47 @@ function downloadClick() {
   a.remove();
 }
 
-$("#add").click(() => {
-  $("html, body").animate(
-    { scrollTop: $(".buttons-container").offset().top },
-    "slow"
-  );
-});
-
-$(".submit-button").click(() => {
-  $("html, body").animate(
-    { scrollTop: $("#student-rankings").offset().top },
-    "slow"
-  );
-});
-
-$(".OpenModal").click(function (event) {
-  $(this).modal({
-    fadeDuration: 250,
-    fadeDelay: 0.8,
+$(function () {
+  $("#add").click(() => {
+    $("html, body").animate(
+      { scrollTop: $(".buttons-container").offset().top },
+      "slow"
+    );
   });
-  return false;
+
+  $(".submit-button").click(() => {
+    $("html, body").animate(
+      { scrollTop: $("#student-rankings").offset().top },
+      "slow"
+    );
+  });
+
+  $(".OpenModal").click(function (event) {
+    $(this).modal({
+      fadeDuration: 250,
+      fadeDelay: 0.8,
+    });
+    return false;
+  });
+
+  $(rankingsBody).on("click", ".delete-button", function () {
+    const $tr = $(this).closest("tr");
+    const rowId = $tr.data("row-id");
+
+    listofArr = listofArr.filter((row) => {
+      const id = row[0];
+
+      if (id !== rowId) return true;
+
+      return false;
+    });
+
+    $tr.remove();
+  });
+
+  $("#contact").submit(submitForm);
+
+  $("#student-rankings").tablesorter();
+
+  setHandlers();
 });
