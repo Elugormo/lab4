@@ -99,7 +99,7 @@ function populateRankings(matrix) {
     const $tr = $(tr);
     $(rankingsBody).append($tr).trigger("addRows", [$tr, true]);
   });
-
+  checkData();
   setHandlers();
 }
 
